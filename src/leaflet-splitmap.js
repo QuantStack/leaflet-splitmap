@@ -51,7 +51,7 @@ function noop () {
   return
 }
 
-L.Control.SideBySide = L.Control.extend({
+L.Control.SplitMap = L.Control.extend({
   options: {
     thumbSize: 42,
     padding: 0
@@ -195,11 +195,11 @@ L.Control.SideBySide = L.Control.extend({
   }
 })
 
-L.control.sideBySide = function (leftLayers, rightLayers, options) {
-  return new L.Control.SideBySide(leftLayers, rightLayers, options)
+L.control.splitMap = function (leftLayers, rightLayers, options) {
+  return new L.Control.SplitMap(leftLayers, rightLayers, options)
 }
 
-module.exports = L.Control.SideBySide
+module.exports = L.Control.SplitMap
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{"./layout.css":2,"./range.css":4}],2:[function(require,module,exports){
