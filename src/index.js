@@ -94,16 +94,16 @@ L.Control.SplitMap = L.Control.extend({
     if (!this._map) {
       return this
     }
-    if (this._leftLayer && this._leftLayer.getContainer) {
+    if (this._leftLayer.getContainer) {
       this._leftLayer.getContainer().style.clip = ""
     } else {
-        this._leftLayer.getPane().style.clip = ""
-      }
-    if (this._rightLayer && this._rightLayer.getContainer) {
+      this._leftLayer.getPane().style.clip = ""
+    }
+    if (this._rightLayer.getContainer) {
       this._rightLayer.getContainer().style.clip = ""
     } else {
       this._rightLayer.getPane().style.clip = ""
-      }
+    }
 
     this._removeEvents()
     L.DomUtil.remove(this._container)
@@ -136,17 +136,17 @@ L.Control.SplitMap = L.Control.extend({
     this.fire('dividermove', {x: dividerX})
     var clipLeft = 'rect(' + [nw.y, clipX, se.y, nw.x].join('px,') + 'px)'
     var clipRight = 'rect(' + [nw.y, se.x, se.y, clipX].join('px,') + 'px)'
-    if (this._leftLayer && this._leftLayer.getContainer) {
+    if (this._leftLayer.getContainer) {
       this._leftLayer.getContainer().style.clip = clipLeft
     } else {
-        this._leftLayer.getPane().style.clip = clipLeft
-      }
-    if (this._rightLayer && this._rightLayer.getContainer) {
+      this._leftLayer.getPane().style.clip = clipLeft
+    }
+    if (this._rightLayer.getContainer) {
       this._rightLayer.getContainer().style.clip = clipRight
     } else {
       this._rightLayer.getPane().style.clip = clipRight
-      }
-   },
+    }
+  },
 
   _updateLayers: function () {
     if (!this._map) {
