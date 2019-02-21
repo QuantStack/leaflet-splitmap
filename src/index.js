@@ -56,8 +56,9 @@ L.Control.SplitMap = L.Control.extend({
   },
 
   initialize: function (leftLayers, rightLayers, options) {
-    this.setLeftLayers(leftLayers)
-    this.setRightLayers(rightLayers)
+    this._leftLayers = asArray(leftLayers)
+    this._rightLayers = asArray(rightLayers)
+    this._updateClip()
     L.setOptions(this, options)
   },
 
@@ -74,9 +75,7 @@ L.Control.SplitMap = L.Control.extend({
   addTo: function (map) {
     this.remove()
     this._map = map
-
     var container = this._container = L.DomUtil.create('div', 'leaflet-sbs', map._controlContainer)
-
     this._divider = L.DomUtil.create('div', 'leaflet-sbs-divider', container)
     var range = this._range = L.DomUtil.create('input', 'leaflet-sbs-range', container)
     range.type = 'range'
@@ -86,7 +85,7 @@ L.Control.SplitMap = L.Control.extend({
     range.value = 0.5
     range.style.paddingLeft = range.style.paddingRight = this.options.padding + 'px'
     this._addEvents()
-    this._updateLayers()
+    this._updateClip()
     return this
   },
 
@@ -94,86 +93,60 @@ L.Control.SplitMap = L.Control.extend({
     if (!this._map) {
       return this
     }
-    if (this._leftLayer.getContainer) {
-      this._leftLayer.getContainer().style.clip = ""
-    } else {
-      this._leftLayer.getPane().style.clip = ""
-    }
-    if (this._rightLayer.getContainer) {
-      this._rightLayer.getContainer().style.clip = ""
-    } else {
-      this._rightLayer.getPane().style.clip = ""
-    }
+    this._leftLayers.forEach((left_layer)=> {
+        if (left_layer.getContainer) {
+            left_layer.getContainer().style.clip = ""
+        }
+        else {
+            left_layer.getPane().style.clip = ""
+        }
+    })
 
+    this._rightLayers.forEach((right_layer)=>{
+        if (right_layer.getContainer) {
+            right_layer.getContainer().style.clip = ""
+        }
+        else {
+            right_layer.getPane().style.clip = ""
+        }
+    })
     this._removeEvents()
     L.DomUtil.remove(this._container)
-
     this._map = null
-
-    return this
-  },
-
-  setLeftLayers: function (leftLayers) {
-    this._leftLayers = asArray(leftLayers)
-    this._updateLayers()
-    return this
-  },
-
-  setRightLayers: function (rightLayers) {
-    this._rightLayers = asArray(rightLayers)
-    this._updateLayers()
     return this
   },
 
   _updateClip: function () {
+    if (!this._map) {
+        return this
+    }
     var map = this._map
     var nw = map.containerPointToLayerPoint([0, 0])
     var se = map.containerPointToLayerPoint(map.getSize())
     var clipX = nw.x + this.getPosition()
     var dividerX = this.getPosition()
-
     this._divider.style.left = dividerX + 'px'
     this.fire('dividermove', {x: dividerX})
     var clipLeft = 'rect(' + [nw.y, clipX, se.y, nw.x].join('px,') + 'px)'
     var clipRight = 'rect(' + [nw.y, se.x, se.y, clipX].join('px,') + 'px)'
-    if (this._leftLayer.getContainer) {
-      this._leftLayer.getContainer().style.clip = clipLeft
-    } else {
-      this._leftLayer.getPane().style.clip = clipLeft
-    }
-    if (this._rightLayer.getContainer) {
-      this._rightLayer.getContainer().style.clip = clipRight
-    } else {
-      this._rightLayer.getPane().style.clip = clipRight
-    }
-  },
 
-  _updateLayers: function () {
-    if (!this._map) {
-      return this
-    }
-    var prevLeft = this._leftLayer
-    var prevRight = this._rightLayer
-    this._leftLayer = this._rightLayer = null
-    this._leftLayers.forEach(function (layer) {
-      if (this._map.hasLayer(layer)) {
-        this._leftLayer = layer
-      }
-    }, this)
-    this._rightLayers.forEach(function (layer) {
-      if (this._map.hasLayer(layer)) {
-        this._rightLayer = layer
-      }
-    }, this)
-    if (prevLeft !== this._leftLayer) {
-      prevLeft && this.fire('leftlayerremove', {layer: prevLeft})
-      this._leftLayer && this.fire('leftlayeradd', {layer: this._leftLayer})
-    }
-    if (prevRight !== this._rightLayer) {
-      prevRight && this.fire('rightlayerremove', {layer: prevRight})
-      this._rightLayer && this.fire('rightlayeradd', {layer: this._rightLayer})
-    }
-    this._updateClip()
+    this._leftLayers.forEach((left_layer)=> {
+        if (left_layer.getContainer) {
+            left_layer.getContainer().style.clip = clipLeft
+        }
+        else {
+            left_layer.getPane().style.clip = clipLeft
+        }
+    })
+
+    this._rightLayers.forEach((right_layer)=>{
+        if (right_layer.getContainer) {
+            right_layer.getContainer().style.clip = clipRight
+        }
+        else {
+            right_layer.getPane().style.clip = clipRight
+        }
+    })
   },
 
   _addEvents: function () {
