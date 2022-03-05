@@ -176,6 +176,7 @@ L.Control.SplitMap = L.Control.extend({
 })
 
 L.control.splitMap = function (leftLayers, rightLayers, options) {
+  console.log('deven')
   return new L.Control.SplitMap(leftLayers, rightLayers, options)
 }
 
