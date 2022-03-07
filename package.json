@@ -1,6 +1,6 @@
 {
   "name": "leaflet-splitmap-deven",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Compare two Leaflet layers side by side",
   "main": "src/index.js",
   "scripts": {
