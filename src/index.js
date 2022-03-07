@@ -94,6 +94,7 @@ L.Control.SplitMap = L.Control.extend({
     if (!this._map) {
       return this
     }
+    console.log(this._map);
     this._leftLayers.forEach((left_layer)=> {
         if (left_layer.getContainer) {
             left_layer.getContainer().style.clip = ""
