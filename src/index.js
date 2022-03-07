@@ -85,7 +85,7 @@ L.Control.SplitMap = L.Control.extend({
     range.value = 0.5
     range.style.paddingLeft = range.style.paddingRight = this.options.padding + 'px'
     this._addEvents()
-    console.log(this._addEvents());
+    console.log(this._addEvents);
     this._updateClip()
     return this
   },
