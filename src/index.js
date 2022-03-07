@@ -159,7 +159,7 @@ L.Control.SplitMap = L.Control.extend({
     var map = this._map
     if (!map || !range) return
     map.on('move', this._updateClip, this)
-    map.on('layeradd layerremove', this._updateLayers, this)
+//     map.on('layeradd layerremove', this._updateLayers, this)
     on(range, getRangeEvent(range), this._updateClip, this)
     on(range, L.Browser.touch ? 'touchstart' : 'mousedown', cancelMapDrag, this)
     on(range, L.Browser.touch ? 'touchend' : 'mouseup', uncancelMapDrag, this)
@@ -181,7 +181,7 @@ L.Control.SplitMap = L.Control.extend({
 })
 
 L.control.splitMap = function (leftLayers, rightLayers, options) {
-  console.log('deven phase 2', leftLayers, rightLayers)
+  console.log('deven phase 3', leftLayers, rightLayers)
   return new L.Control.SplitMap(leftLayers, rightLayers, options)
 }
 
