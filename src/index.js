@@ -94,7 +94,7 @@ L.Control.SplitMap = L.Control.extend({
     if (!this._map) {
       return this
     }
-    console.log(this._map);
+    console.log(this._map, 'in remove');
     this._leftLayers.forEach((left_layer)=> {
         if (left_layer.getContainer) {
             left_layer.getContainer().style.clip = ""
@@ -122,6 +122,7 @@ L.Control.SplitMap = L.Control.extend({
     if (!this._map) {
         return this
     }
+    console.log(this._map, 'in update');
     var map = this._map
     var nw = map.containerPointToLayerPoint([0, 0])
     var se = map.containerPointToLayerPoint(map.getSize())
@@ -133,6 +134,7 @@ L.Control.SplitMap = L.Control.extend({
     var clipRight = 'rect(' + [nw.y, se.x, se.y, clipX].join('px,') + 'px)'
 
     this._leftLayers.forEach((left_layer)=> {
+        console.log('in loop left')
         if (left_layer.getContainer) {
             left_layer.getContainer().style.clip = clipLeft
         }
@@ -142,6 +144,7 @@ L.Control.SplitMap = L.Control.extend({
     })
 
     this._rightLayers.forEach((right_layer)=>{
+      console.log('in loop left')
         if (right_layer.getContainer) {
             right_layer.getContainer().style.clip = clipRight
         }
