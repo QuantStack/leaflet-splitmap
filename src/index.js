@@ -70,7 +70,7 @@ L.Control.SplitMap = L.Control.extend({
 
   setPosition: noop,
 
-  includes: L.Mixin.Events,
+  includes: L.version.split(".")[0] === '1' ? L.Evented.prototype : L.Mixin.Events,
 
   addTo: function (map) {
     this.remove()
