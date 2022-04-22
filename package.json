@@ -1,6 +1,6 @@
 {
   "name": "leaflet-splitmap",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Compare two Leaflet layers side by side",
   "main": "src/index.js",
   "scripts": {
