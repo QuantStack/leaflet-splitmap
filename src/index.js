@@ -156,8 +156,8 @@ L.Control.SplitMap = L.Control.extend({
     map.on('move', this._updateClip, this)
     map.on('layeradd layerremove', this._updateLayers, this)
     on(range, getRangeEvent(range), this._updateClip, this)
-    on(range, L.Browser.touch ? 'touchstart' : 'mousedown', cancelMapDrag, this)
-    on(range, L.Browser.touch ? 'touchend' : 'mouseup', uncancelMapDrag, this)
+    on(range, 'ontouchstart' in window ? 'touchstart' : 'mousedown', cancelMapDrag, this)
+    on(range, 'ontouchstart' in window ? 'touchend' : 'mouseup', uncancelMapDrag, this)
   },
 
   _removeEvents: function () {
@@ -165,8 +165,8 @@ L.Control.SplitMap = L.Control.extend({
     var map = this._map
     if (range) {
       off(range, getRangeEvent(range), this._updateClip, this)
-      off(range, L.Browser.touch ? 'touchstart' : 'mousedown', cancelMapDrag, this)
-      off(range, L.Browser.touch ? 'touchend' : 'mouseup', uncancelMapDrag, this)
+      off(range, 'ontouchstart' in window ? 'touchstart' : 'mousedown', cancelMapDrag, this)
+      off(range, 'ontouchstart' in window ? 'touchend' : 'mouseup', uncancelMapDrag, this)
     }
     if (map) {
       map.off('layeradd layerremove', this._updateLayers, this)
